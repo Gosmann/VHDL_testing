@@ -41,15 +41,38 @@ architecture BEHAV_CASE of MUX is -- will implement via a flat mux
         begin
 
         case SEL is
-            when 0 => x <= 0 ;
-            when 1 => x <= A ;
-            when 2 => x <= B ;
-            when others => x <= 255 ;
+            when 0 => X <= 0 ;
+            when 1 => X <= A ;
+            when 2 => X <= B ;
+            when others => X <= 255 ;
         end case ;
 
     end process ;
 
-end architecture ;
+end BEHAV_CASE ;
 
 
-        
+architecture CONCURRENT_CONDITIONAL of MUX is -- concurent conditional signal assignement
+
+    begin 
+
+    X <=    0 when SEL = 0 else
+            A when SEL = 1 else
+            B when SEL = 2 else
+            255 when SEL = 3 ; 
+
+end CONCURRENT_CONDITIONAL ;
+
+architecture CONCURRENT_SELECTED of MUX is -- selected signal assignement
+
+    begin
+
+    with SEL select
+        X <=  0 when 0 ,
+              A when 1 ,
+              B when 2 ,
+              255 when 3 ;
+              
+    
+end CONCURRENT_SELECTED ;      
+
